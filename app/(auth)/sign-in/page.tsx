@@ -1,74 +1,152 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import Navbar from "@/components/landing/Navbar";
-import Footer from "@/components/landing/Footer";
-import { buttonVariants } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { siteConfig } from "@/lib/config/site";
-import { cn } from "@/lib/utils";
+"use client";
 
-export const metadata: Metadata = {
-  title: `Sign In — ${siteConfig.name}`,
-};
+import Link from "next/link";
+import { ArrowRight, MapPin } from "lucide-react";
+import { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function SignInPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const router = useRouter();
+
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    router.push("/dashboard");
+  }
+
   return (
-    <div className="min-h-screen bg-[#FAFAFA]">
-      <Navbar />
-      <main className="mx-auto flex max-w-md flex-col px-6 py-24 lg:py-32">
-        <h1 className="text-3xl font-semibold tracking-[-0.03em] text-neutral-950">
-          Welcome back
-        </h1>
-        <p className="mt-3 text-neutral-500">
-          Sign in to discover experiences and manage your bookings.
-        </p>
+    <main className="min-h-screen bg-[#fafafa] text-neutral-950">
+      <div className="grid min-h-screen lg:grid-cols-2">
 
-        <form className="mt-10 space-y-5" action="/dashboard">
-          <div className="space-y-2">
-            <label htmlFor="email" className="text-sm font-medium text-neutral-700">
-              Email
-            </label>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="you@example.com"
-              required
-              className="h-12 rounded-2xl border-[#E8E8E8] bg-white"
-            />
-          </div>
-          <div className="space-y-2">
-            <label htmlFor="password" className="text-sm font-medium text-neutral-700">
-              Password
-            </label>
-            <Input
-              id="password"
-              name="password"
-              type="password"
-              placeholder="••••••••"
-              required
-              className="h-12 rounded-2xl border-[#E8E8E8] bg-white"
-            />
-          </div>
-          <button
-            type="submit"
-            className={cn(
-              buttonVariants(),
-              "h-12 w-full rounded-full bg-neutral-950 hover:bg-neutral-800"
-            )}
-          >
-            Sign In
-          </button>
-        </form>
+        {/* BRAND SIDE */}
 
-        <p className="mt-8 text-center text-sm text-neutral-500">
-          Don&apos;t have an account?{" "}
-          <Link href={siteConfig.links.signUp} className="text-neutral-950 underline-offset-4 hover:underline">
-            Sign up
+        <section className="hidden bg-black p-10 text-white lg:flex lg:flex-col lg:justify-between">
+          <Link href="/" className="text-2xl font-black tracking-tight">
+            BunkGo
           </Link>
-        </p>
-      </main>
-      <Footer />
-    </div>
+
+          <div className="max-w-xl">
+            <p className="mb-6 text-xs uppercase tracking-[0.3em] text-neutral-500">
+              Discover locally
+            </p>
+
+            <h1 className="text-7xl font-black leading-[0.9] tracking-[-0.06em]">
+              Your next
+              <br />
+              experience
+              <br />
+              is waiting.
+            </h1>
+
+            <p className="mt-8 max-w-md text-lg leading-8 text-neutral-400">
+              Find events, communities and experiences worth showing up for
+              across Navi Mumbai and Thane.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2 text-sm text-neutral-500">
+            <MapPin size={15} />
+            Navi Mumbai · Thane
+          </div>
+        </section>
+
+        {/* FORM */}
+
+        <section className="flex min-h-screen items-center justify-center px-6 py-12">
+          <div className="w-full max-w-md">
+
+            <div className="mb-10 lg:hidden">
+              <Link href="/" className="text-2xl font-black">
+                BunkGo
+              </Link>
+            </div>
+
+            <p className="text-xs uppercase tracking-[0.3em] text-neutral-400">
+              Welcome back
+            </p>
+
+            <h2 className="mt-4 text-4xl font-black tracking-tight md:text-5xl">
+              Sign in.
+            </h2>
+
+            <p className="mt-4 text-neutral-500">
+              Pick up where you left off.
+            </p>
+
+            <form onSubmit={handleSubmit} className="mt-10 space-y-5">
+
+              <div>
+                <label
+                  htmlFor="email"
+                  className="mb-2 block text-sm font-medium"
+                >
+                  Email
+                </label>
+
+                <input
+                  id="email"
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@example.com"
+                  className="h-14 w-full rounded-2xl border border-neutral-200 bg-white px-5 outline-none transition focus:border-black"
+                />
+              </div>
+
+              <div>
+                <div className="mb-2 flex items-center justify-between">
+                  <label
+                    htmlFor="password"
+                    className="text-sm font-medium"
+                  >
+                    Password
+                  </label>
+
+                  <button
+                    type="button"
+                    className="text-xs text-neutral-400 hover:text-black"
+                  >
+                    Forgot password?
+                  </button>
+                </div>
+
+                <input
+                  id="password"
+                  type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className="h-14 w-full rounded-2xl border border-neutral-200 bg-white px-5 outline-none transition focus:border-black"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="flex h-14 w-full items-center justify-center gap-3 rounded-full bg-black font-semibold text-white transition hover:scale-[1.01] hover:bg-neutral-800"
+              >
+                Sign In
+                <ArrowRight size={17} />
+              </button>
+
+            </form>
+
+            <p className="mt-8 text-center text-sm text-neutral-500">
+              New to BunkGo?{" "}
+              <Link
+                href="/sign-up"
+                className="font-semibold text-black underline underline-offset-4"
+              >
+                Create an account
+              </Link>
+            </p>
+
+          </div>
+        </section>
+
+      </div>
+    </main>
   );
 }

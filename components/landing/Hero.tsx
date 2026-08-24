@@ -102,6 +102,7 @@ export default function Hero() {
           <div className="overflow-hidden rounded-[40px] border border-[#E8E8E8] bg-white p-6 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.12)] sm:p-8">
             <EventImage
               label={heroEvent.title}
+              src={heroEvent.image}
               className="mb-8 h-64 rounded-[28px] sm:h-80"
             />
 

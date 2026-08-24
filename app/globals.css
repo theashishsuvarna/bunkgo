@@ -128,3 +128,15 @@
     @apply font-sans;
   }
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  .logo-mark {
+    animation: logo-bounce 2.8s cubic-bezier(.2,.8,.2,1) infinite;
+  }
+}
+
+@keyframes logo-bounce {
+  0%, 86%, 100% { transform: translateY(0) rotate(0); }
+  91% { transform: translateY(-3px) rotate(-5deg); }
+  96% { transform: translateY(0) rotate(3deg); }
+}

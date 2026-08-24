@@ -6,10 +6,8 @@ import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import EventImage from "@/components/landing/EventImage";
 import { buttonVariants } from "@/components/ui/button";
-import { featuredEvents, heroEvent } from "@/data/events";
+import { events } from "@/data/events";
 import { cn } from "@/lib/utils";
-
-const allEvents = [heroEvent, ...featuredEvents];
 
 type PageProps = {
   params: Promise<{ id: string }>;
@@ -17,14 +15,14 @@ type PageProps = {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = await params;
-  const event = allEvents.find((e) => e.id === id);
+  const event = events.find((e) => e.id === id);
   if (!event) return { title: "Event Not Found" };
   return { title: `${event.title} — BunkGo` };
 }
 
 export default async function EventPage({ params }: PageProps) {
   const { id } = await params;
-  const event = allEvents.find((e) => e.id === id);
+  const event = events.find((e) => e.id === id);
 
   if (!event) notFound();
 
@@ -41,7 +39,7 @@ export default async function EventPage({ params }: PageProps) {
         </Link>
 
         <article className="overflow-hidden rounded-[36px] border border-[#E8E8E8] bg-white">
-          <EventImage label={event.title} className="h-72 sm:h-96" />
+          <EventImage label={event.title} src={event.image} className="h-72 sm:h-96" />
           <div className="p-8 sm:p-10">
             <p className="text-xs font-medium uppercase tracking-[0.25em] text-neutral-400">
               {event.tag}
@@ -73,15 +71,15 @@ export default async function EventPage({ params }: PageProps) {
                   {event.price}
                 </p>
               </div>
-              <button
-                type="button"
+              <Link
+                href={`/booking?event=${event.id}`}
                 className={cn(
                   buttonVariants({ size: "lg" }),
                   "h-12 rounded-full bg-neutral-950 px-10 hover:bg-neutral-800"
                 )}
               >
                 Book Now
-              </button>
+              </Link>
             </div>
           </div>
         </article>

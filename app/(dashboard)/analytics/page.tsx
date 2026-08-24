@@ -1,28 +1,10 @@
-import type { Metadata } from "next";
 import Link from "next/link";
-import { siteConfig } from "@/lib/config/site";
-
-export const metadata: Metadata = {
-  title: `Analytics — ${siteConfig.name}`,
-};
+import { ArrowUpRight, Users } from "lucide-react";
+import { events } from "@/data/events";
 
 export default function AnalyticsPage() {
-  return (
-    <main className="min-h-screen bg-[#FAFAFA] px-6 py-16 lg:px-10">
-      <div className="mx-auto max-w-4xl">
-        <h1 className="text-3xl font-semibold tracking-[-0.03em] text-neutral-950">
-          Analytics
-        </h1>
-        <p className="mt-3 text-neutral-500">
-          Track attendance, revenue, and engagement for your events.
-        </p>
-        <Link
-          href="/dashboard"
-          className="mt-8 inline-flex rounded-full border border-[#E8E8E8] bg-white px-6 py-3 text-sm text-neutral-600 transition-colors hover:border-neutral-950 hover:text-neutral-950"
-        >
-          Back to Dashboard
-        </Link>
-      </div>
-    </main>
-  );
+  const published = events.filter((event) => event.status === "Published");
+  const bookings = published.reduce((sum, event) => sum + event.capacity - event.seatsLeft, 0);
+  const values = [35, 58, 43, 76, 64, 92, 70];
+  return <main className="min-h-screen bg-[#fafafa] text-neutral-950"><header className="border-b border-neutral-200 bg-white"><div className="mx-auto flex h-[72px] max-w-6xl items-center justify-between px-6"><Link href="/" className="text-xl font-black">BunkGo</Link><nav className="flex gap-5 text-sm text-neutral-500"><Link href="/dashboard">Overview</Link><Link href="/dashboard/events">Events</Link><Link href="/profile">Profile</Link></nav></div></header><section className="mx-auto max-w-6xl px-6 py-12"><p className="text-xs uppercase tracking-[.25em] text-neutral-400">Organizer workspace</p><h1 className="mt-3 text-4xl font-black tracking-tight md:text-5xl">What&apos;s working.</h1><div className="mt-10 grid gap-4 sm:grid-cols-3">{[["Tickets sold", bookings], ["Revenue", "₹38,420"], ["Returning guests", "42%"]].map(([label, value]) => <div key={label as string} className="rounded-[24px] border border-neutral-200 bg-white p-6"><p className="text-3xl font-black">{value}</p><p className="mt-2 text-sm text-neutral-500">{label}</p><p className="mt-4 text-xs font-medium text-emerald-600">↑ 12.5% vs last month</p></div>)}</div><div className="mt-6 grid gap-6 lg:grid-cols-[1.5fr_1fr]"><div className="rounded-[28px] border border-neutral-200 bg-white p-6"><div className="flex items-center justify-between"><div><h2 className="font-semibold">Ticket momentum</h2><p className="mt-1 text-sm text-neutral-500">Last 7 days</p></div><span className="text-sm font-semibold">+24%</span></div><div className="mt-10 flex h-48 items-end gap-3">{values.map((value, index) => <div key={index} className="flex flex-1 flex-col items-center gap-2"><div className="w-full rounded-t-xl bg-black" style={{height:`${value}%`}}/><span className="text-[10px] text-neutral-400">{["M","T","W","T","F","S","S"][index]}</span></div>)}</div></div><div className="rounded-[28px] border border-neutral-200 bg-black p-6 text-white"><Users className="size-5"/><h2 className="mt-10 text-2xl font-bold">Your strongest crowd is back.</h2><p className="mt-3 text-sm leading-6 text-neutral-400">Most guests discover through friends and return for community-led events.</p><Link href="/dashboard/events" className="mt-8 inline-flex items-center gap-2 text-sm font-semibold">Open events <ArrowUpRight className="size-4"/></Link></div></div></section></main>;
 }

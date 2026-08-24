@@ -26,6 +26,7 @@ import { cn } from "@/lib/utils";
 const navLinks = [
   { name: "Discover", href: siteConfig.links.discover },
   { name: "Communities", href: siteConfig.links.communities },
+  { name: "About", href: "/about" },
   { name: "Host", href: siteConfig.links.host },
 ];
 

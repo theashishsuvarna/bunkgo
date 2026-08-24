@@ -1,32 +1,13 @@
-import type { Metadata } from "next";
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
+import { CalendarDays, Heart, Pencil, Ticket } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
-import { siteConfig } from "@/lib/config/site";
-
-export const metadata: Metadata = {
-  title: `Profile — ${siteConfig.name}`,
-};
+import { events } from "@/data/events";
 
 export default function ProfilePage() {
-  return (
-    <div className="min-h-screen bg-[#FAFAFA]">
-      <Navbar />
-      <main className="mx-auto max-w-2xl px-6 py-24 text-center lg:py-32">
-        <h1 className="text-3xl font-semibold tracking-[-0.03em] text-neutral-950">
-          Your profile
-        </h1>
-        <p className="mt-4 text-neutral-500">
-          Sign in to view your bookings, saved events, and community memberships.
-        </p>
-        <Link
-          href={siteConfig.links.signIn}
-          className="mt-8 inline-flex rounded-full bg-neutral-950 px-8 py-3 text-sm text-white transition-colors hover:bg-neutral-800"
-        >
-          Sign In
-        </Link>
-      </main>
-      <Footer />
-    </div>
-  );
+  const [editing, setEditing] = useState(false); const [name, setName] = useState("Rohan Mehta"); const [bio, setBio] = useState("Chasing good music, great coffee and people with ideas.");
+  return <div className="min-h-screen bg-[#fafafa] text-neutral-950"><Navbar/><main className="mx-auto max-w-5xl px-6 py-12 md:py-20"><section className="rounded-[32px] bg-black p-7 text-white sm:p-10"><div className="flex flex-col justify-between gap-8 sm:flex-row"><div className="flex gap-5"><div className="grid size-16 shrink-0 place-items-center rounded-full bg-white text-xl font-black text-black">RM</div><div><p className="text-xs uppercase tracking-[.2em] text-neutral-400">BunkGo member</p><h1 className="mt-2 text-3xl font-black">{name}</h1><p className="mt-2 max-w-md text-sm leading-6 text-neutral-400">{bio}</p></div></div><button onClick={() => setEditing(!editing)} className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-white px-4 text-sm font-semibold text-black"><Pencil className="size-3.5"/>Edit profile</button></div>{editing && <div className="mt-8 grid gap-3 border-t border-white/15 pt-6 sm:grid-cols-2"><input value={name} onChange={e => setName(e.target.value)} className="h-11 rounded-xl bg-white/10 px-3 text-sm outline-none ring-1 ring-white/20"/><input value={bio} onChange={e => setBio(e.target.value)} className="h-11 rounded-xl bg-white/10 px-3 text-sm outline-none ring-1 ring-white/20"/></div>}</section><div className="mt-8 grid gap-5 md:grid-cols-[1.35fr_.65fr]"><section className="rounded-[28px] border border-neutral-200 bg-white p-6"><div className="flex items-center justify-between"><div><p className="text-xs uppercase tracking-[.2em] text-neutral-400">Coming up</p><h2 className="mt-2 text-xl font-bold">Your bookings</h2></div><Ticket className="size-5"/></div><Link href={`/event/${events[0].id}`} className="mt-6 flex items-center justify-between rounded-2xl bg-neutral-50 p-4 hover:bg-neutral-100"><div><p className="font-semibold">{events[0].title}</p><p className="mt-1 text-sm text-neutral-500">{events[0].date} · {events[0].time}</p></div><span className="text-sm font-semibold">View</span></Link></section><section className="rounded-[28px] border border-neutral-200 bg-white p-6"><Heart className="size-5"/><p className="mt-6 text-3xl font-black">8</p><p className="mt-1 text-sm text-neutral-500">Saved experiences</p><Link href="/discover" className="mt-7 inline-flex text-sm font-semibold">Explore more →</Link></section></div><section className="mt-5 rounded-[28px] border border-neutral-200 bg-white p-6"><CalendarDays className="size-5"/><h2 className="mt-5 text-xl font-bold">Planning something?</h2><p className="mt-2 text-sm text-neutral-500">Create an event, invite your community and watch it come alive.</p><Link href="/dashboard/events" className="mt-5 inline-flex rounded-full bg-black px-4 py-2.5 text-sm font-semibold text-white">Open organizer workspace</Link></section></main><Footer/></div>;
 }

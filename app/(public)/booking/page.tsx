@@ -1,0 +1,11 @@
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { Check, ChevronLeft, Ticket } from "lucide-react";
+import { events } from "@/data/events";
+
+export default async function BookingPage({ searchParams }: { searchParams: Promise<{ event?: string }> }) {
+  const { event: eventId } = await searchParams;
+  const event = events.find((item) => item.id === eventId);
+  if (!event) notFound();
+  return <main className="min-h-screen bg-[#fafafa] px-5 py-8 text-neutral-950 sm:px-8"><div className="mx-auto max-w-3xl"><Link href={`/event/${event.id}`} className="inline-flex items-center gap-2 text-sm text-neutral-500"><ChevronLeft className="size-4"/>Back to event</Link><div className="mt-10 grid gap-6 md:grid-cols-[1fr_.8fr]"><section><p className="text-xs uppercase tracking-[.25em] text-neutral-400">Secure your spot</p><h1 className="mt-3 text-4xl font-black tracking-tight">You&apos;re almost there.</h1><div className="mt-8 rounded-[28px] border border-neutral-200 bg-white p-6"><div className="flex gap-4"><div className="grid size-12 place-items-center rounded-2xl bg-black text-white"><Ticket className="size-5"/></div><div><h2 className="font-semibold">{event.title}</h2><p className="mt-1 text-sm text-neutral-500">{event.date} · {event.time}<br/>{event.location}, {event.city}</p></div></div><div className="mt-7 border-t border-neutral-100 pt-6"><label className="text-xs font-medium text-neutral-500">Tickets</label><select className="mt-2 h-12 w-full rounded-xl border border-neutral-200 bg-white px-3"><option>1 ticket</option><option>2 tickets</option><option>3 tickets</option></select></div></div></section><aside className="h-fit rounded-[28px] bg-black p-6 text-white"><p className="text-sm text-neutral-400">Order summary</p><div className="mt-6 flex items-center justify-between"><span>{event.price} × 1</span><strong>{event.price}</strong></div><div className="mt-5 flex items-center justify-between border-t border-white/15 pt-5 text-lg font-bold"><span>Total</span><span>{event.price}</span></div><button className="mt-7 h-12 w-full rounded-full bg-white text-sm font-semibold text-black">Confirm booking</button><p className="mt-4 flex items-center gap-2 text-xs text-neutral-400"><Check className="size-3"/>Demo checkout — no payment collected.</p></aside></div></div></main>;
+}

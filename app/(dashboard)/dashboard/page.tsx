@@ -1,28 +1,9 @@
-import type { Metadata } from "next";
 import Link from "next/link";
-import { siteConfig } from "@/lib/config/site";
-
-export const metadata: Metadata = {
-  title: `Dashboard — ${siteConfig.name}`,
-};
+import { ArrowUpRight, CalendarDays, ChartNoAxesCombined, Ticket } from "lucide-react";
+import { events } from "@/data/events";
 
 export default function DashboardPage() {
-  return (
-    <main className="min-h-screen bg-[#FAFAFA] px-6 py-16 lg:px-10">
-      <div className="mx-auto max-w-4xl">
-        <h1 className="text-3xl font-semibold tracking-[-0.03em] text-neutral-950">
-          Dashboard
-        </h1>
-        <p className="mt-3 text-neutral-500">
-          Your upcoming events and bookings will appear here.
-        </p>
-        <Link
-          href={siteConfig.links.discover}
-          className="mt-8 inline-flex rounded-full border border-[#E8E8E8] bg-white px-6 py-3 text-sm text-neutral-600 transition-colors hover:border-neutral-950 hover:text-neutral-950"
-        >
-          Explore Events
-        </Link>
-      </div>
-    </main>
-  );
+  const published = events.filter((event) => event.status === "Published");
+  const bookings = published.reduce((sum, event) => sum + event.capacity - event.seatsLeft, 0);
+  return <main className="min-h-screen bg-[#fafafa] text-neutral-950"><header className="border-b border-neutral-200 bg-white"><div className="mx-auto flex h-[72px] max-w-6xl items-center justify-between px-6"><Link href="/" className="text-xl font-black">BunkGo</Link><nav className="flex gap-5 text-sm text-neutral-500"><Link href="/dashboard/events">Events</Link><Link href="/dashboard/analytics">Analytics</Link><Link href="/profile">Profile</Link></nav></div></header><section className="mx-auto max-w-6xl px-6 py-12"><p className="text-xs uppercase tracking-[.25em] text-neutral-400">Good evening, Rohan</p><h1 className="mt-3 text-4xl font-black tracking-tight md:text-5xl">Your community is moving.</h1><div className="mt-10 grid gap-4 sm:grid-cols-3">{[["Live events",String(published.length),CalendarDays],["Tickets booked",String(bookings),Ticket],["This month", "₹38.4k",ChartNoAxesCombined]].map(([label,value,Icon]) => { const I = Icon as typeof CalendarDays; return <div key={label as string} className="rounded-[24px] border border-neutral-200 bg-white p-6"><I className="size-5"/><p className="mt-7 text-3xl font-black">{value as string}</p><p className="mt-1 text-sm text-neutral-500">{label as string}</p></div>})}</div><div className="mt-10 flex flex-col gap-6 rounded-[28px] border border-neutral-200 bg-white p-6 sm:flex-row sm:items-center sm:justify-between"><div><p className="text-xs uppercase tracking-[.2em] text-neutral-400">Next up</p><h2 className="mt-2 text-2xl font-bold">{published[0].title}</h2><p className="mt-2 text-sm text-neutral-500">{published[0].date} · {published[0].capacity - published[0].seatsLeft} tickets booked</p></div><Link href="/dashboard/events" className="inline-flex items-center gap-2 text-sm font-semibold">Manage events <ArrowUpRight className="size-4"/></Link></div></section></main>;
 }

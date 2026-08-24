@@ -70,6 +70,7 @@ export default function FeaturedEvents() {
               <div className="relative">
                 <EventImage
                   label={event.title}
+                  src={event.image}
                   className="h-72 transition-transform duration-500 group-hover:scale-[1.02]"
                 />
                 <span className="absolute left-5 top-5 rounded-full bg-white px-4 py-1.5 text-xs font-medium uppercase tracking-wider text-neutral-950">

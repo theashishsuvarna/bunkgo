@@ -21,10 +21,10 @@ export default function OrganizersPage() {
           reach the right audience in Navi Mumbai and Thane.
         </p>
         <Link
-          href={siteConfig.links.signUp}
+          href="/dashboard/events"
           className="mt-10 inline-flex rounded-full bg-neutral-950 px-8 py-3 text-sm text-white transition-colors hover:bg-neutral-800"
         >
-          Become a Host
+          Open organizer workspace
         </Link>
       </main>
       <Footer />

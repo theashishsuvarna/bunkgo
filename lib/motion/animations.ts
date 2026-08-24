@@ -25,11 +25,11 @@ export const scaleIn = {
 export const viewport = { once: true, margin: "-80px" as const };
 
 export const transition = {
-  duration: 0.6,
+  duration: 0.34,
   ease,
 };
 
 export const hoverLift = {
-  y: -8,
-  transition: { duration: 0.3, ease },
+  y: -5,
+  transition: { duration: 0.18, ease },
 };

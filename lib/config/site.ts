@@ -5,7 +5,7 @@ export const siteConfig = {
   locations: ["Navi Mumbai", "Thane"] as const,
   links: {
     discover: "/discover",
-    communities: "#communities",
+    communities: "/#communities",
     host: "/organizers",
     signIn: "/sign-in",
     signUp: "/sign-up",

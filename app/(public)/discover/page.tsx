@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowUpRight,
   CalendarDays,
@@ -11,85 +12,7 @@ import {
   Sparkles,
   X,
 } from "lucide-react";
-
-const events = [
-  {
-    id: "midnight-rooftop",
-    title: "Midnight Rooftop Session",
-    category: "Music",
-    location: "Belapur",
-    city: "Navi Mumbai",
-    date: "Tonight",
-    time: "8:00 PM",
-    price: "₹299",
-    tag: "Trending",
-  },
-  {
-    id: "anime-cafe",
-    title: "Anime Café Meetup",
-    category: "Anime",
-    location: "Nerul",
-    city: "Navi Mumbai",
-    date: "Saturday",
-    time: "5:00 PM",
-    price: "Free",
-    tag: "Community",
-  },
-  {
-    id: "open-mic",
-    title: "Sunday Open Mic",
-    category: "Comedy",
-    location: "Thane West",
-    city: "Thane",
-    date: "Sunday",
-    time: "7:30 PM",
-    price: "₹199",
-    tag: "Popular",
-  },
-  {
-    id: "sunset-run",
-    title: "Sunset Run Club",
-    category: "Fitness",
-    location: "Kharghar",
-    city: "Navi Mumbai",
-    date: "Sunday",
-    time: "6:30 AM",
-    price: "₹99",
-    tag: "New",
-  },
-  {
-    id: "startup-social",
-    title: "Founders & Builders Social",
-    category: "Startup",
-    location: "Vashi",
-    city: "Navi Mumbai",
-    date: "Friday",
-    time: "6:30 PM",
-    price: "₹399",
-    tag: "Limited",
-  },
-  {
-    id: "coffee-walk",
-    title: "Sunday Coffee Walk",
-    category: "Coffee",
-    location: "Ghodbunder",
-    city: "Thane",
-    date: "Sunday",
-    time: "9:00 AM",
-    price: "₹149",
-    tag: "Chill",
-  },
-];
-
-const categories = [
-  "All",
-  "Music",
-  "Comedy",
-  "Anime",
-  "Fitness",
-  "Startup",
-  "Coffee",
-];
+import { events, eventCategories } from "@/data/events";
 
 export default function DiscoverPage() {
   const [query, setQuery] = useState("");
@@ -238,7 +161,7 @@ export default function DiscoverPage() {
 
           <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
 
-            {categories.map((item) => (
+            {eventCategories.map((item) => (
               <button
                 key={item}
                 onClick={() => setCategory(item)}
@@ -307,7 +230,8 @@ export default function DiscoverPage() {
 
                 <div className="relative h-72 overflow-hidden bg-neutral-100">
 
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,#ffffff,transparent_35%),linear-gradient(135deg,#e5e5e5,#f8f8f8)] transition duration-700 group-hover:scale-105" />
+                  <Image src={event.image} alt="" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition duration-300 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/5 to-black/10" />
 
                   <div className="absolute left-5 top-5 rounded-full bg-white px-4 py-2 text-xs font-semibold">
                     {event.tag}
